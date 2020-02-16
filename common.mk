@@ -5,9 +5,12 @@
 #
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+$(call inherit-product, vendor/addons/onepluscamera/config.mk)
+$(call inherit-product-if-exists, vendor/opengapps/build/opengapps-packages.mk)
 
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/oneplus/sm8150-common/sm8150-common-vendor.mk)
+
 
 # Vendor properties
 -include $(LOCAL_PATH)/vendor_props.mk
@@ -19,12 +22,7 @@ PRODUCT_COPY_FILES += \
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
-
-PRODUCT_ENFORCE_RRO_TARGETS := *
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-lineage/lineage-sdk \
-    $(LOCAL_PATH)/overlay-lineage/packages/apps/Snap
+    $(LOCAL_PATH)/overlay-derp
 
 # A/B
 AB_OTA_UPDATER := true
@@ -88,7 +86,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
-    vendor/lineage/config/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml
+    $(LOCAL_PATH)/configs/vendor.lineage.biometrics.fingerprint.inscreen.xml:system/etc/permissions/vendor.lineage.biometrics.fingerprint.inscreen.xml \
 
 # ANT+
 PRODUCT_PACKAGES += \
@@ -145,6 +143,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
+# OpDeviceManagerInjector
+PRODUCT_PACKAGES += oneplus-mock
+PRODUCT_BOOT_JARS += oneplus-mock
+
 # Boot control
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl:64 \
@@ -168,7 +170,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service_64 \
     libxml2 \
-    Snap \
     vendor.oneplus.camera.CameraHIDL@1.0.vendor \
     vendor.qti.hardware.camera.device@1.0.vendor
 
@@ -206,6 +207,8 @@ PRODUCT_PACKAGES += \
     init.qti.ims.sh \
     init.recovery.qcom.rc \
     init.target.rc \
+    init.target.omni.rc \
+    init.lineage.rc \
     kmemleak.sh \
     ueventd.rc \
     vendor.oem_ftm.rc \
@@ -214,6 +217,16 @@ PRODUCT_PACKAGES += \
 # Cryptfshw
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.cryptfshw@1.0.vendor
+
+# DerpFest Customs
+TARGET_BOOT_ANIMATION_RES := 1080
+TARGET_GAPPS_ARCH := arm64
+DERP_BUILDTYPE := Official
+BUILD_DATE := $(shell date +"%Y%m%d-%H%M%S")
+IS_PHONE := true
+CURRENT_BUILD_TYPE := nogapps
+DERP_BUILD_ZIP_TYPE := VANILLA
+
 
 # Display
 PRODUCT_PACKAGES += \
@@ -240,6 +253,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OnePlusDoze
 
+# Device
+PRODUCT_PACKAGES += \
+    DeviceParts \
+	ExactCalculator \
+	DeskClock \
+	SoundRecorder \
+	Dialer
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
@@ -250,7 +271,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.oneplus_msmnile \
     vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus_msmnile \
-    vendor.oneplus.fingerprint.extension@1.0.vendor
+    vendor.oneplus.fingerprint.extension@1.0.vendor \
+	vendor.oneplus.hardware.display@1.0.vendor
+										  
 
 # For config.fs
 PRODUCT_PACKAGES += \
@@ -310,10 +333,6 @@ PRODUCT_PACKAGES += \
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.oneplus_msmnile
-
-# LiveDisplay
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service-sdm
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -456,8 +475,8 @@ PRODUCT_PACKAGES += \
 
 # tri-state key
 PRODUCT_PACKAGES += \
-    KeyHandler \
-    tri-state-key_daemon
+    tri-state-key_daemon \
+    tri-state-key-calibrate_daemon
 
 # Trust HAL
 PRODUCT_PACKAGES += \
