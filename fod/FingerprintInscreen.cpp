@@ -38,7 +38,7 @@
 #define DIM_AMOUNT_PATH "/sys/class/drm/card0-DSI-1/dim_alpha"
 
 namespace vendor {
-namespace lineage {
+namespace one {
 namespace biometrics {
 namespace fingerprint {
 namespace inscreen {
@@ -152,6 +152,7 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool enabled) {
 
 Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
     int dimAmount = get(DIM_AMOUNT_PATH, 0);
+
     LOG(INFO) << "dimAmount = " << dimAmount;
 
     return dimAmount;
@@ -187,5 +188,5 @@ Return<int32_t> FingerprintInscreen::getSize() {
 }  // namespace inscreen
 }  // namespace fingerprint
 }  // namespace biometrics
-}  // namespace lineage
+}  // namespace pa
 }  // namespace vendor
