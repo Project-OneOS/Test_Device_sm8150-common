@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef VENDOR_PA_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
-#define VENDOR_PA_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+#ifndef VENDOR_ONE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+#define VENDOR_ONE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
 
-#include <vendor/pa/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
+#include <vendor/one/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
 #include <vendor/oneplus/fingerprint/extension/1.0/IVendorFingerprintExtensions.h>
 #include <vendor/oneplus/hardware/display/1.0/IOneplusDisplay.h>
 
@@ -70,4 +70,4 @@ class FingerprintInscreen : public IFingerprintInscreen {
 }  // namespace one
 }  // namespace vendor
 
-#endif  // VENDOR_PA_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+#endif  // VENDOR_ONE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H

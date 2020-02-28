@@ -30,3 +30,6 @@ attribute hal_rpmb_server;
 attribute hal_wiredse;
 attribute hal_wiredse_client;
 attribute hal_wiredse_server;
+
+attribute hal_lineage_fod_server;
+attribute hal_lineage_fod;

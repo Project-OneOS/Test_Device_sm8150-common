@@ -5,7 +5,7 @@
 #
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
-$(call inherit-product, vendor/addons/onepluscamera/config.mk)
+$(call inherit-product-if-exists, vendor/addons/onepluscamera/config.mk)
 $(call inherit-product-if-exists, vendor/opengapps/build/opengapps-packages.mk)
 
 # Get non-open-source specific aspects
