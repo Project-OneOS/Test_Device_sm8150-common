@@ -745,15 +745,15 @@ public class KeyHandler implements DeviceKeyHandler {
         return null;
     }
 
-    @Override
-    public boolean getCustomProxiIsNear(SensorEvent event) {
-        return event.values[0] == 1;
-    }
+//    @Override
+//    public boolean getCustomProxiIsNear(SensorEvent event) {
+//        return event.values[0] == 1;
+//    }
 
-    @Override
-    public String getCustomProxiSensor() {
-        return "com.oneplus.sensor.pocket";
-    }
+ //   @Override
+ //   public String getCustomProxiSensor() {
+ //       return "com.oneplus.sensor.pocket";
+ //   }
 
     void showToast(int messageId, int duration, int yOffset) {
         final String message = mResContext.getResources().getString(messageId);
